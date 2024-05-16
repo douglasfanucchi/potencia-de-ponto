@@ -5,7 +5,6 @@ class PotenciaDePonto(Scene):
     def construct(self):
         centered_circle = Circle(radius=2.5)
         centered_circle.set_stroke(WHITE, width=1)
-        origin = np.array([0, 0, 0])
 
         P = SmallDot(
             point=np.array([-5, 2, 0])
