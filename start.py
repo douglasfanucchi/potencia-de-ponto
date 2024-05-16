@@ -19,11 +19,21 @@ class PotenciaDePonto(Scene):
         B = Line(start=P.get_points()[0], end=np.array([2.3, -1]))
         B.set_stroke(WHITE, width=1)
 
-        angle_APC = ArcBetweenPoints(
+        arc = ArcBetweenPoints(
             start=P.get_points()[0] + B.get_unit_vector(),
             end=P.get_points()[0] + A.get_unit_vector(),
-            stroke_width=1,
-            fill_color=BLUE
+            stroke_width=1
+        )
+
+        radius = get_norm(P.get_points()[0] - arc.get_start())
+        angle = (arc.get_arc_length() / radius) * 0.9
+        sector = Sector(
+            angle=angle,
+            radius=radius,
+            arc_center=P.get_points()[0],
+            start_angle=B.get_angle(),
+            fill_color=BLUE,
+            fill_opacity=0.5
         )
 
         self.play(ShowCreation(P))
@@ -31,4 +41,4 @@ class PotenciaDePonto(Scene):
         self.play(ShowCreation(centered_circle))
         self.play(ShowCreation(A))
         self.play(ShowCreation(B))
-        self.play(ShowCreation(angle_APC))
+        self.play(ShowCreation(sector))
