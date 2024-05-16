@@ -7,9 +7,8 @@ class PotenciaDePonto(Scene):
         centered_circle.set_stroke(WHITE, width=1)
         origin = np.array([0, 0, 0])
 
-        P = Dot(
-            point=np.array([-5, 2, 0]),
-            radius=0.03
+        P = SmallDot(
+            point=np.array([-5, 2, 0])
         )
 
         pLabel = Text("P", font_size=14)
@@ -24,7 +23,8 @@ class PotenciaDePonto(Scene):
         sector = ArcBetweenPoints(
             start=P.get_points()[0] + B.get_unit_vector(),
             end=P.get_points()[0] + A.get_unit_vector(),
-            stroke_width=1
+            stroke_width=1,
+            fill_color=BLUE
         )
 
         self.play(ShowCreation(P))
