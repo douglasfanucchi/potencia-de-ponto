@@ -10,8 +10,9 @@ class FilledAngle(VMobject):
             color = BLUE,
             opacity = 0.5,
             other_angle = True,
+            stroke_width=1,
             **kwargs):
-        super().__init__()
+        super().__init__(stroke_width=stroke_width)
         a1 = Angle(l1, l2, other_angle=other_angle, radius=0).set_color(color)
         a2 = Angle(l1, l2, other_angle=other_angle, radius=radius).set_color(color)
         q1 = a1.points
@@ -33,14 +34,15 @@ class PotenciaDePonto(Scene):
         pLabel = Text("P", font_size=14)
         pLabel.move_to(P.get_points()[0] + np.array([-0.1, 0.1, 0]))
 
-        A = Line(start=P.get_points()[0], end=np.array([2.3, 1, 0]))
-        A.set_stroke(WHITE, width=3)
+        l1 = Line(start=P.get_points()[0], end=np.array([2.3, 1, 0]))
+        l1.set_stroke(WHITE, width=3)
 
-        B = Line(start=P.get_points()[0], end=np.array([2.3, -1, 0]))
-       	B.set_stroke(WHITE, width=3)
+        l2 = Line(start=P.get_points()[0], end=np.array([2.3, -1, 0]))
+       	l2.set_stroke(WHITE, width=3)
 
-        arc = FilledAngle(A, B, 5)
+        arc = FilledAngle(l1, l2, 1)
 
-        self.play(Create(arc))
         self.play(Write(pLabel), Create(P), Create(centered_circle))
-        self.play(Create(A), Create(B))
+        self.play(Create(l1), Create(l2))
+        self.wait(5)
+        self.play(Create(arc))
