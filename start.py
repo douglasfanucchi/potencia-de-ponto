@@ -32,11 +32,11 @@ class PotenciaDePonto(Scene):
 	    )
 
         pLabel = Text("P", font_size=14)
-        pLabel.move_to(P.get_points()[0] + np.array([-0.1, 0.1, 0]))
+        pLabel.move_to(P.points[0] + np.array([-0.1, 0.1, 0]))
 
-        l1 = Line(start=P.get_points()[0], end=np.array([2.3, 1, 0]))
+        l1 = Line(start=P.points[0], end=np.array([2.3, 1, 0]))
         l1.set_stroke(WHITE, width=3)
-        l2 = Line(start=P.get_points()[0], end=np.array([0, -2.5, 0]))
+        l2 = Line(start=P.points[0], end=np.array([0, -2.5, 0]))
        	l2.set_stroke(WHITE, width=3)
         arc = FilledAngle(l1, l2, 1)
         l1_intersec = self.circle_intersection(l1, centered_circle)
@@ -44,8 +44,8 @@ class PotenciaDePonto(Scene):
         l3 = Line(start=l1_intersec[1], end=l2_intersec[0])
         l4 = Line(start=l2_intersec[1], end=l1_intersec[0])
 
-        l1_opposite = Line(start=np.array([2.3, 1, 0]), end=P.get_points()[0])
-        l2_opossite = Line(start=np.array([0, -2.5, 0]), end=P.get_points()[0])
+        l1_opposite = Line(start=np.array([2.3, 1, 0]), end=P.points[0])
+        l2_opossite = Line(start=np.array([0, -2.5, 0]), end=P.points[0])
         arc2 = FilledAngle(l1_opposite, l3, 1, color=ORANGE, other_angle=False)
         arc3 = FilledAngle(l2_opossite, l4, 1, color=ORANGE)
 
