@@ -61,7 +61,7 @@ class PotenciaDePonto(Scene):
         u = circle.get_center()
         a = np.dot(v, v)
         b = 2 * (np.dot(v, w) - np.dot(v, u))
-        c = np.dot(w, w) + np.dot(u, u) - 2*u[0]*(v[0] + v[1]) - circle.radius**2
+        c = np.dot(w, w) + np.dot(u, u) - 2*np.dot(u,w) - circle.radius**2
         discriminant = b**2 - 4*a*c
         if (discriminant < 0):
             return -1
