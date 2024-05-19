@@ -11,10 +11,11 @@ class FilledAngle(VMobject):
             opacity = 0.5,
             other_angle = False,
             stroke_width=1,
+            quadrant=np.array([1, 1]),
             **kwargs):
         super().__init__(stroke_width=stroke_width)
-        a1 = Angle(l1, l2, other_angle=other_angle, radius=0).set_color(color)
-        a2 = Angle(l1, l2, other_angle=other_angle, radius=radius).set_color(color)
+        a1 = Angle(l1, l2, other_angle=other_angle, radius=0, quadrant=quadrant).set_color(color)
+        a2 = Angle(l1, l2, other_angle=other_angle, radius=radius, quadrant=quadrant).set_color(color)
         q1 = a1.points
         q2 = a2.reverse_direction().points
         pnts = np.concatenate([q1, q2, q1[0].reshape(1, 3)])
@@ -44,10 +45,8 @@ class PotenciaDePonto(Scene):
         l3 = Line(start=l1_intersec[1], end=l2_intersec[0])
         l4 = Line(start=l2_intersec[1], end=l1_intersec[0])
 
-        l1_opposite = Line(start=np.array([2.3, 1, 0]), end=P.points[0])
-        l2_opossite = Line(start=np.array([0, -2.5, 0]), end=P.points[0])
-        arc2 = FilledAngle(l1_opposite, l3, 1, color=ORANGE)
-        arc3 = FilledAngle(l4, l2_opossite, 1, color=ORANGE)
+        arc2 = FilledAngle(l1, l3, 1, color=ORANGE, quadrant=np.array([-1, 1]))
+        arc3 = FilledAngle(l4, l2, 1, color=ORANGE, quadrant=np.array([1, -1]))
 
         self.play(Write(pLabel), Create(P), Create(centered_circle))
         self.play(Create(l1), Create(l2))
