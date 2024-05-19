@@ -9,7 +9,7 @@ class FilledAngle(VMobject):
             radius: float,
             color = BLUE,
             opacity = 0.5,
-            other_angle = True,
+            other_angle = False,
             stroke_width=1,
             **kwargs):
         super().__init__(stroke_width=stroke_width)
@@ -38,7 +38,7 @@ class PotenciaDePonto(Scene):
         l1.set_stroke(WHITE, width=3)
         l2 = Line(start=P.points[0], end=np.array([0, -2.5, 0]))
        	l2.set_stroke(WHITE, width=3)
-        arc = FilledAngle(l1, l2, 1)
+        arc = FilledAngle(l1, l2, 1, other_angle=True)
         l1_intersec = self.circle_intersection(l1, centered_circle)
         l2_intersec = self.circle_intersection(l2, centered_circle)
         l3 = Line(start=l1_intersec[1], end=l2_intersec[0])
@@ -46,8 +46,8 @@ class PotenciaDePonto(Scene):
 
         l1_opposite = Line(start=np.array([2.3, 1, 0]), end=P.points[0])
         l2_opossite = Line(start=np.array([0, -2.5, 0]), end=P.points[0])
-        arc2 = FilledAngle(l1_opposite, l3, 1, color=ORANGE, other_angle=False)
-        arc3 = FilledAngle(l2_opossite, l4, 1, color=ORANGE)
+        arc2 = FilledAngle(l1_opposite, l3, 1, color=ORANGE)
+        arc3 = FilledAngle(l4, l2_opossite, 1, color=ORANGE)
 
         self.play(Write(pLabel), Create(P), Create(centered_circle))
         self.play(Create(l1), Create(l2))
