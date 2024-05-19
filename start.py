@@ -22,22 +22,30 @@ class FilledAngle(VMobject):
         self.set_color(color)
         self.set_points_as_corners(pnts).set_fill(color, opacity)
 
+class LabeledDot():
+    def __init__(self, dot, label):
+        self.dot = dot
+        self.label = label
+        self.label.move_to(self.dot.points[0] + np.array([-0.1, 0.1, 0]))
+
 class PotenciaDePonto(Scene):
     def construct(self):
         centered_circle = Circle(radius=2.5)
-        centered_circle.set_stroke(WHITE, width=3)
+        centered_circle.set_stroke(WHITE, width=3) 
 
-        P = Dot(
-            point=np.array([-5, 2, 0]),
-            radius=0.03
-	    )
+        P = LabeledDot(
+            dot=Dot(
+                    point=np.array([-5, 2, 0]),
+                    radius=0.03
+                ),
+                label=Text(
+                    "P", font_size=14
+                )
+            )
 
-        pLabel = Text("P", font_size=14)
-        pLabel.move_to(P.points[0] + np.array([-0.1, 0.1, 0]))
-
-        l1 = Line(start=P.points[0], end=np.array([2.3, 1, 0]))
+        l1 = Line(start=P.dot.points[0], end=np.array([2.3, 1, 0]))
         l1.set_stroke(WHITE, width=3)
-        l2 = Line(start=P.points[0], end=np.array([0, -2.5, 0]))
+        l2 = Line(start=P.dot.points[0], end=np.array([0, -2.5, 0]))
        	l2.set_stroke(WHITE, width=3)
         arc = FilledAngle(l1, l2, 1, other_angle=True)
         l1_intersec = self.circle_intersection(l1, centered_circle)
@@ -48,7 +56,7 @@ class PotenciaDePonto(Scene):
         arc2 = FilledAngle(l1, l3, 1, color=ORANGE, quadrant=np.array([-1, 1]))
         arc3 = FilledAngle(l4, l2, 1, color=ORANGE, quadrant=np.array([1, -1]))
 
-        self.play(Write(pLabel), Create(P), Create(centered_circle))
+        self.play(Write(P.label), Create(P.dot), Create(centered_circle))
         self.play(Create(l1), Create(l2))
         self.play(Create(l3), Create(l4))
         self.play(Create(arc), Create(arc2), Create(arc3))
