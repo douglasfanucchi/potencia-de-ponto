@@ -114,6 +114,19 @@ class PotenciaDePonto(Scene):
         self.play(Create(arc), Create(arc2), Create(arc3))
         self.wait(5)
 
+    def get_circle_y_coordinates(self, x: float, circle: Circle):
+        v = circle.arc_center
+        a = 1
+        b = -v[1]
+        c = np.dot(v, v) + x*(x - 2*v[0]) - circle.radius**2
+        discriminant = b**2 - c
+        if discriminant < 0:
+            return None
+        coordinates = []
+        coordinates += [-b - np.sqrt(discriminant)]
+        coordinates += [-b + np.sqrt(discriminant)]
+        return coordinates
+
     def circle_intersection(self, line: Line, circle: Circle):
         v = line.get_unit_vector()
         w = line.get_start()
