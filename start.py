@@ -47,8 +47,10 @@ class PotenciaDePonto(Scene):
                     "P", font_size=font_size),
             )
 
-        l1 = Line(start=P.dot.points[0], end=np.array([2.3, 1, 0]), stroke_width=3)
-        l2 = Line(start=P.dot.points[0], end=np.array([0, -2.5, 0]), stroke_width=3)
+        l1_end = self.get_circle_points(1, centered_circle)[1]
+        l2_end = self.get_circle_points(0, centered_circle)[0]
+        l1 = Line(start=P.dot.points[0], end=np.array(l1_end), stroke_width=3)
+        l2 = Line(start=P.dot.points[0], end=np.array(l2_end), stroke_width=3)
         self.play(Write(P.label), Create(P.dot), Create(centered_circle))
         self.play(Create(l1), Create(l2))
 
@@ -113,6 +115,12 @@ class PotenciaDePonto(Scene):
         arc3 = FilledAngle(l4, l2, 1, color=ORANGE, quadrant=np.array([1, -1]))
         self.play(Create(arc), Create(arc2), Create(arc3))
         self.wait(5)
+
+    def get_circle_points(self, x: float, circle: Circle):
+        return [
+            [x, self.get_circle_y_coordinates(x, circle)[0], 0],
+            [x, self.get_circle_y_coordinates(x, circle)[1], 0]
+        ]
 
     def get_circle_y_coordinates(self, x: float, circle: Circle):
         v = circle.arc_center
