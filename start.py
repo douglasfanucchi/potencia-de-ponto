@@ -23,24 +23,28 @@ class FilledAngle(VMobject):
         self.set_points_as_corners(pnts).set_fill(color, opacity)
 
 class LabeledDot():
-    def __init__(self, dot, label):
+    def __init__(self, dot, label, label_position=None):
         self.dot = dot
         self.label = label
-        self.label.move_to(self.dot.points[0] + np.array([-0.1, 0.1, 0]))
+        coordinates = self.dot.points[0] + np.array([-0.1, 0.1, 0])
+        if label_position is not None:
+            coordinates += label_position
+        self.label.move_to(coordinates)
 
 class PotenciaDePonto(Scene):
     def construct(self):
         centered_circle = Circle(radius=2.5)
-        centered_circle.set_stroke(WHITE, width=3) 
+        centered_circle.set_stroke(WHITE, width=3)
+        font_size=14
+        dot_radius=0.03
 
         P = LabeledDot(
             dot=Dot(
                     point=np.array([-5, 2, 0]),
-                    radius=0.03
+                    radius=dot_radius
                 ),
                 label=Text(
-                    "P", font_size=14
-                )
+                    "P", font_size=font_size),
             )
 
         l1 = Line(start=P.dot.points[0], end=np.array([2.3, 1, 0]), stroke_width=3)
@@ -50,6 +54,55 @@ class PotenciaDePonto(Scene):
 
         l1_intersec = self.circle_intersection(l1, centered_circle)
         l2_intersec = self.circle_intersection(l2, centered_circle)
+        A=LabeledDot(
+            dot=Dot(
+                point=l1_intersec[0],
+                radius=dot_radius
+            ),
+            label=Text(
+                "A",
+                font_size=font_size
+            ),
+            label_position=np.array([0, 0.1, 0])
+        )
+        B=LabeledDot(
+            dot=Dot(
+                point=l1_intersec[1],
+                radius=dot_radius
+            ),
+            label=Text(
+                "B",
+                font_size=font_size
+            ),
+            label_position=np.array([0.2, 0, 0])
+        )
+        C=LabeledDot(
+            dot=Dot(
+                point=l2_intersec[0],
+                radius=dot_radius
+            ),
+            label=Text(
+                "C",
+                font_size=font_size
+            ),
+            label_position=np.array([-0.1, -0.2, 0])
+        )
+        D=LabeledDot(
+            dot=Dot(
+                point=l2_intersec[1],
+                radius=dot_radius
+            ),
+            label=Text(
+                "D",
+                font_size=font_size,
+            ),
+            label_position=np.array([0.1, -0.25, 0])
+        )
+        self.play(
+            Create(A.dot), Create(A.label),
+            Create(B.dot), Create(B.label),
+            Create(C.dot), Create(C.label),
+            Create(D.dot), Create(D.label))
 
         l3 = Line(start=l1_intersec[1], end=l2_intersec[0])
         l4 = Line(start=l2_intersec[1], end=l1_intersec[0])
