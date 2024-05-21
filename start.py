@@ -52,7 +52,28 @@ class PotenciaDePonto(Scene):
         l1 = Line(start=P.dot.points[0], end=np.array(l1_end), stroke_width=3)
         l2 = Line(start=P.dot.points[0], end=np.array(l2_end), stroke_width=3)
         self.play(Write(P.label), Create(P.dot), Create(centered_circle))
-        self.play(Create(l1), Create(l2))
+        lines_to_remove = [
+            Line(start=P.dot.points[0], end=self.get_circle_points(0, centered_circle)[1], stroke_width=3),
+            Line(start=P.dot.points[0], end=self.get_circle_points(0, centered_circle)[0], stroke_width=3),
+            Line(start=P.dot.points[0], end=self.get_circle_points(1, centered_circle)[1], stroke_width=3),
+            Line(start=P.dot.points[0], end=self.get_circle_points(1, centered_circle)[0], stroke_width=3),
+            Line(start=P.dot.points[0], end=self.get_circle_points(2, centered_circle)[1], stroke_width=3),
+            Line(start=P.dot.points[0], end=self.get_circle_points(2, centered_circle)[0], stroke_width=3),
+            Line(start=P.dot.points[0], end=self.get_circle_points(2.5, centered_circle)[0], stroke_width=3),
+        ]
+        self.play(
+            Create(l1), Create(l2),
+            Create(lines_to_remove[0]), Create(lines_to_remove[1]), Create(lines_to_remove[2]),
+            Create(lines_to_remove[3]), Create(lines_to_remove[4]), Create(lines_to_remove[5]),
+            Create(lines_to_remove[6])
+        )
+        self.play(
+            FadeOut(lines_to_remove[0]), FadeOut(lines_to_remove[1]), FadeOut(lines_to_remove[2]),
+            FadeOut(lines_to_remove[3]), FadeOut(lines_to_remove[4]), FadeOut(lines_to_remove[5]),
+            FadeOut(lines_to_remove[6])
+        )
+        for line in lines_to_remove:
+            self.remove(line)
 
         l1_intersec = self.circle_intersection(l1, centered_circle)
         l2_intersec = self.circle_intersection(l2, centered_circle)
