@@ -163,6 +163,58 @@ class PotenciaDePonto(Scene):
         self.remove(PC, faded_l2, faded_l4, faded_arc3)
         FadeTransform(arc, arc)
 
+        l1.add_updater(
+            lambda x: x.become(Line(start=P.dot.points[0], end=B.dot.points[0], stroke_width=3))
+        )
+        l3.add_updater(
+            lambda x: x.become(Line(start=B.dot.points[0], end=C.dot.points[0], stroke_width=3))
+        )
+        l4.add_updater(
+            lambda x: x.become(Line(start=D.dot.points[0], end=A.dot.points[0], stroke_width=3))
+        )
+
+        arc.add_updater(lambda x: x.become(FilledAngle(l1, l2, 1, other_angle=True)))
+        arc2.add_updater(lambda x: x.become(FilledAngle(l1, l3, 1, color=ORANGE, quadrant=[-1, 1])))
+        arc3.add_updater(lambda x: x.become(FilledAngle(l4, l2, 1, color=ORANGE, quadrant=[1, -1])))
+
+        self.play(
+            Rotate(
+                B.dot,
+                angle=-0.5,
+                about_point=ORIGIN
+            ),
+            Rotate(
+                A.dot,
+                angle=0.27,
+                about_point=ORIGIN
+            )
+        )
+        self.wait(2)
+        self.play(
+            Rotate(
+                B.dot,
+                angle=-0.5,
+                about_point=ORIGIN
+            ),
+            Rotate(
+                A.dot,
+                angle=0.215,
+                about_point=ORIGIN
+            )
+        )
+        self.wait(2)
+        self.play(
+            Rotate(
+                B.dot,
+                angle=1,
+                about_point=ORIGIN
+            ),
+            Rotate(
+                A.dot,
+                angle=-0.485,
+                about_point=ORIGIN
+            )
+        )
         self.wait(5)
 
     def get_circle_points(self, x: float, circle: Circle):
