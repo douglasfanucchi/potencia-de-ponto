@@ -135,6 +135,34 @@ class PotenciaDePonto(Scene):
         arc2 = FilledAngle(l1, l3, 1, color=ORANGE, quadrant=np.array([-1, 1]))
         arc3 = FilledAngle(l4, l2, 1, color=ORANGE, quadrant=np.array([1, -1]))
         self.play(Create(arc), Create(arc2), Create(arc3))
+
+        PA = Line(start=P.dot.points[0], end=A.dot.points[0], stroke_width=3)
+        PC = Line(start=P.dot.points[0], end=C.dot.points[0], stroke_width=3)
+        self.add(PA)
+        self.add(PC)
+        faded_l1 = Line(start=l1.start, end=l1.end, stroke_width=3, stroke_opacity=0.2)
+        faded_l3 = Line(start=l3.start, end=l3.end, stroke_width=3, stroke_opacity=0.2)
+        faded_arc2 = FilledAngle(l1, l3, 1, color=ORANGE, quadrant=[-1, 1], opacity=0.1)
+        self.play(
+            FadeTransform(l1, faded_l1),
+            FadeTransform(l3, faded_l3),
+            FadeTransform(arc2, faded_arc2)
+        )
+        self.wait(2)
+        faded_l2 = Line(start=l2.start, end=l2.end, stroke_width=3, stroke_opacity=0.2)
+        faded_l4 = Line(start=l4.start, end=l4.end, stroke_width=3, stroke_opacity=0.2)
+        faded_arc3 = FilledAngle(l4, l2, 1, color=ORANGE, quadrant=[1, -1], opacity=0.1)
+        self.play(
+            FadeIn(l1), FadeIn(l3), FadeIn(arc2),
+            FadeTransform(l2, faded_l2), FadeTransform(l4, faded_l4), FadeTransform(arc3, faded_arc3)
+        )
+        FadeTransform(arc, arc)
+        self.wait(2)
+        self.play(FadeIn(l2), FadeIn(l4), FadeIn(arc3))
+        self.remove(PA, faded_l1, faded_l3, faded_arc2)
+        self.remove(PC, faded_l2, faded_l4, faded_arc3)
+        FadeTransform(arc, arc)
+
         self.wait(5)
 
     def get_circle_points(self, x: float, circle: Circle):
