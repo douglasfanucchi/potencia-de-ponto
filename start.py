@@ -156,12 +156,10 @@ class PotenciaDePonto(Scene):
             FadeIn(l1), FadeIn(l3), FadeIn(arc2),
             FadeTransform(l2, faded_l2), FadeTransform(l4, faded_l4), FadeTransform(arc3, faded_arc3)
         )
-        FadeTransform(arc, arc)
         self.wait(2)
         self.play(FadeIn(l2), FadeIn(l4), FadeIn(arc3))
         self.remove(PA, faded_l1, faded_l3, faded_arc2)
         self.remove(PC, faded_l2, faded_l4, faded_arc3)
-        FadeTransform(arc, arc)
 
         l1.add_updater(
             lambda x: x.become(Line(start=P.dot.points[0], end=B.dot.points[0], stroke_width=3))
