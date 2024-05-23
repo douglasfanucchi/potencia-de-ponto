@@ -27,9 +27,12 @@ class LabeledDot():
         self.dot = dot
         self.label = label
         coordinates = self.dot.points[0] + np.array([-0.1, 0.1, 0])
-        if label_position is not None:
-            coordinates += label_position
+        label_position = label_position if label_position is not None else [0, 0, 0]
+        coordinates += label_position
         self.label.move_to(coordinates)
+        label.add_updater(lambda x: x.move_to(
+            dot.points[0] + np.array([-0.1, 0.1, 0]) + label_position
+        ))
 
 class PotenciaDePonto(Scene):
     def construct(self):
